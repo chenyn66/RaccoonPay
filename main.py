@@ -5,6 +5,9 @@ import DataBase
 import re
 from random import randrange as randomrange
 
+account_sid = 'account here'
+auth_token = 'token here'
+twilio_num = 'service phone num'
 
 client = Client(account_sid, auth_token)
 
