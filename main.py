@@ -5,9 +5,9 @@ import DataBase
 import re
 from random import choices
 
-account_sid = 'ACa1eecaa5a3dfce760e891fa9c4813dd2'
-auth_token = '7b62fe4c09668de19ecca2f13487c117'
-twilio_num = '+19498355128'
+account_sid = 'account here'
+auth_token = 'token here'
+twilio_num = 'service phone num'
 client = Client(account_sid, auth_token)
 
 class Handler(BaseHTTPRequestHandler):
