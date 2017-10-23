@@ -3,12 +3,11 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import parse_qs
 import DataBase
 import re
-from random import randrange as randomrange
+from random import choices
 
-account_sid = 'account here'
-auth_token = 'token here'
-twilio_num = 'service phone num'
-
+account_sid = 'ACa1eecaa5a3dfce760e891fa9c4813dd2'
+auth_token = '7b62fe4c09668de19ecca2f13487c117'
+twilio_num = '+19498355128'
 client = Client(account_sid, auth_token)
 
 class Handler(BaseHTTPRequestHandler):
@@ -51,30 +50,25 @@ class Handler(BaseHTTPRequestHandler):
             <script src="http://raccoonpay.me/info.js"></script>
             </body>
             '''
-            try:
-                if groupNum != 'ERRORONNEW':
-                    web_content = web_content_template.format('<p id="group-label">YOUR GROUP NUMBER IS</p><p id="group-number">' + groupNum + '</p><p id="group-intro">Share this number with your friends and have them send to (949) 835-5128 within 10 minutes.</p>')
-                else:
-                    web_content = web_content_template.format('<p id="group-intro">You are already in a group. Please check out that group before you create a new one.</p>')
-            except:
-                web_content = web_content_template.format('<p id="group-intro">We are experiencing some technical difficulties. Please try again later.</p>')
+            if groupNum != 'ERRORONNEW':
+                web_content = web_content_template.format('<p id="group-label">YOUR GROUP NUMBER IS</p><p id="group-number">' + str(groupNum) + '</p><p id="group-intro">Share this number with your friends and have them send to (949) 835-5128 within 10 minutes.</p>')
+            else:
+                web_content = web_content_template.format('<p id="group-intro">You are already in a group. Please check out that group before you create a new one.</p>')
             self.wfile.write(web_content.encode())
 
 def send_sms(messageToSend, numToSend):
-    try:
-        message = client.messages.create(
-            body = messageToSend,
-            to = numToSend,
-            from_ = twilio_num
-        )
-    except client.TwilioRestException as e:
-        print(e)
+    message = client.messages.create(
+        body = messageToSend,
+        to = numToSend,
+        from_ = twilio_num
+    )
 
 def generateCode():
     while True:
-        num = randomrange(100000, 1000000)
-        if not DataBase.used(num):
-            return num
+        Dights = [str(i) for i in range(10)]
+        strnum = ''.join(choices(Dights, k=6))
+        if not DataBase.used(strnum):
+            return strnum
 
 def typeisint(target):
     try:

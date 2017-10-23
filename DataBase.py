@@ -102,7 +102,7 @@ def AddMember(member, code: int) -> bool:
     return True
 
 
-def used(code: int) -> bool:
+def used(code: str) -> bool:
     dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
     table = dynamodb.Table('Code')
     response = table.get_item(
